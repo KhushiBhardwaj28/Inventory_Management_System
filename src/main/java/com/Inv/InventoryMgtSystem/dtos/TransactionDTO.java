@@ -29,8 +29,11 @@ public class TransactionDTO {
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    // Foreign Key IDs
     private Long productId;
     private Long userId;
     private Long supplierId;
+
+    private ProductDTO product;
+    private UserDTO user;
+    private SupplierDTO supplier;
 }

@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
-    private final JwtUtils jwtService;
+    private final JwtUtils jwtUtils;
+
 
     @Override
     public Response registerUser(RegisterRequest registerRequest) {
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new InvalidCredentialsException("Password Does Not Match");
         }
-        String token = jwtService.generateToken(user.getEmail());
+        String token = jwtUtils.generateToken(user.getEmail());
 
         return Response.builder()
                 .status(200)
@@ -155,6 +156,7 @@ public class UserServiceImpl implements UserService {
                 .status(200)
                 .message("User successfully Deleted")
                 .build();
+
     }
 
     @Override

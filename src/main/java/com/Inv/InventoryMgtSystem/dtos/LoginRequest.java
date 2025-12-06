@@ -16,11 +16,13 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 
-public class LoginReqest {
+public class LoginRequest {
 
     @NotBlank(message = "Username is required")
     private String username;
     @JsonIgnore
     @NotBlank(message = "Password is required")
     private String password;
+    @NotBlank(message = "Email is required")
+    private String Email;
 }

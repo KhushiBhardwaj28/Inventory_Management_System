@@ -4,6 +4,7 @@ import com.Inv.InventoryMgtSystem.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.transaction.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +29,7 @@ public class UserDTO {
     private String phoneNumber;
     private UserRole role;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private Transaction transactions;
     // Note: Transactions list and password are intentionally omitted for security and simplicity
 }
