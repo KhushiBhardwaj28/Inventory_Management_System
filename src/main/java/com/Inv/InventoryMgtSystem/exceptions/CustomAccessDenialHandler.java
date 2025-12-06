@@ -15,14 +15,14 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class CustomAccessDenialHandler implements AccessDeniedHandler { // <-- Correct name used here
-
+public class CustomAccessDenialHandler implements AccessDeniedHandler {
     private final ObjectMapper objectMapper;
 
     @Override
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,
-                       AccessDeniedException accessDeniedException) throws IOException, ServletException {
+                       AccessDeniedException accessDeniedException)
+            throws IOException, ServletException {
 
         Response errorResponse = Response.builder()
                 .status(HttpStatus.FORBIDDEN.value())

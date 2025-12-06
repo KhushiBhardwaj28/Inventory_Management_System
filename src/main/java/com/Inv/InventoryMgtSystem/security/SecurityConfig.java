@@ -29,7 +29,7 @@ public class SecurityConfig {
 
     private final AuthFilter authFilter;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-    private final CustomAccessDenialHandler customAccessDenialHandler; // Field name fixed to DENIAL
+    private final CustomAccessDenialHandler customAccessDenialHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {

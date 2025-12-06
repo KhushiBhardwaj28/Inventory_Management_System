@@ -2,6 +2,7 @@ package com.Inv.InventoryMgtSystem.exceptions;
 
 import com.Inv.InventoryMgtSystem.dtos.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
-                         AuthenticationException authException) throws IOException {
-
+                         AuthenticationException authException)
+            throws IOException, ServletException {
         Response errorResponse = Response.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .message(authException.getMessage())
