@@ -4,6 +4,7 @@ import com.Inv.InventoryMgtSystem.dtos.LoginRequest;
 import com.Inv.InventoryMgtSystem.dtos.RegisterRequest;
 import com.Inv.InventoryMgtSystem.dtos.Response;
 import com.Inv.InventoryMgtSystem.dtos.UserDTO;
+import com.Inv.InventoryMgtSystem.dtos.TransactionDTO;
 import com.Inv.InventoryMgtSystem.enums.UserRole;
 import com.Inv.InventoryMgtSystem.exceptions.InvalidCredentialsException;
 import com.Inv.InventoryMgtSystem.exceptions.NotFoundException;
@@ -32,7 +33,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
     private final JwtUtils jwtUtils;
-
 
     @Override
     public Response registerUser(RegisterRequest registerRequest) {
@@ -156,7 +156,6 @@ public class UserServiceImpl implements UserService {
                 .status(200)
                 .message("User successfully Deleted")
                 .build();
-
     }
 
     @Override
@@ -166,10 +165,15 @@ public class UserServiceImpl implements UserService {
 
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 
-        userDTO.getTransactions().forEach(transactionDTO -> {
+        List<TransactionDTO> transactionDTOS = modelMapper.map(user.getTransactions(), new TypeToken<List<TransactionDTO>>() {
+        }.getType());
+
+        transactionDTOS.forEach(transactionDTO -> {
             transactionDTO.setUser(null);
             transactionDTO.setSupplier(null);
         });
+
+        userDTO.setTransactions(transactionDTOS);
 
         return Response.builder()
                 .status(200)
