@@ -1,6 +1,5 @@
 package com.Inv.InventoryMgtSystem.models;
 
-import com.Inv.InventoryMgtSystem.enums.TransactionType;
 import com.Inv.InventoryMgtSystem.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -42,9 +41,8 @@ public class User {
     private UserRole role;
 
     // Relationships
-    @SuppressWarnings("JpaAttributeTypeInspection")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<TransactionType> transactions;
+    private List<Transaction> transactions;
 
     // Field initialization (matching your screenshot)
     @Column(name = "Created_At")

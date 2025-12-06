@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class CustomAccessDenialHandler implements AccessDeniedHandler {
+public class CustomAccessDenialHandler implements AccessDeniedHandler { // <-- Correct name used here
 
     private final ObjectMapper objectMapper;
 

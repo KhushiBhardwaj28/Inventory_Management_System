@@ -1,5 +1,5 @@
 package com.Inv.InventoryMgtSystem.dtos;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
@@ -14,15 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-
-
 public class LoginRequest {
 
-    @NotBlank(message = "Username is required")
-    private String username;
-    @JsonIgnore
+    @NotBlank(message = "Email is required")
+    private String email;
+
     @NotBlank(message = "Password is required")
     private String password;
-    @NotBlank(message = "Email is required")
-    private String Email;
 }

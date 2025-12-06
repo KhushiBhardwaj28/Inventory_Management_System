@@ -3,13 +3,13 @@ package com.Inv.InventoryMgtSystem.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.function.Function;
@@ -27,7 +27,7 @@ public class JwtUtils {
     @PostConstruct
     private void init() {
         byte[] keyByte = secretJwtString.getBytes(StandardCharsets.UTF_8);
-        this.key = new SecretKeySpec(keyByte, "HmacSHA256");
+        this.key = Keys.hmacShaKeyFor(keyByte);
     }
 
     public String generateToken(String email) {

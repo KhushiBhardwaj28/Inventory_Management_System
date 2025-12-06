@@ -29,14 +29,14 @@ public class SecurityConfig {
 
     private final AuthFilter authFilter;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-    private final CustomAccessDenialHandler customAccessDeniedHandler;
+    private final CustomAccessDenialHandler customAccessDenialHandler; // Field name fixed to DENIAL
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .exceptionHandling(exception -> exception
-                        .accessDeniedHandler(customAccessDeniedHandler)
+                        .accessDeniedHandler(customAccessDenialHandler)
                         .authenticationEntryPoint(customAuthenticationEntryPoint)
                 )
                 .authorizeHttpRequests(request -> request
