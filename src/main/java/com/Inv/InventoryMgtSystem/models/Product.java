@@ -1,6 +1,14 @@
 package com.Inv.InventoryMgtSystem.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +17,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,11 +37,11 @@ public class Product {
 
     @NotNull(message = "SKU is required")
     @Column(unique = true)
-    private String sku; // Stock Keeping Unit
+    private String sku;
 
     @NotNull(message = "Price is required")
     @Min(value = 0, message = "Price cannot be negative")
-    private Double price;
+    private BigDecimal price; // CORRECTED: Now matches DTO and service logic
 
     @NotNull(message = "Stock quantity is required")
     @Min(value = 0, message = "Stock cannot be negative")
@@ -51,9 +60,8 @@ public class Product {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    // Relationships: Many Products belong to one Category
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id") // Foreign Key column name
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @Override
