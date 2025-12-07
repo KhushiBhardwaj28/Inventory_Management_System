@@ -1,23 +1,22 @@
 package com.Inv.InventoryMgtSystem.dtos;
-import com.Inv.InventoryMgtSystem.enums.UserRole;
-import jakarta.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.Inv.InventoryMgtSystem.enums.TransactionStatus;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionReqest {
 
-    @Positive(message = "product id is required")
+    @Positive(message = "Product ID is required and must be positive")
     private Long productId;
 
-    @Positive(message = "quantity id is required")
+    @Positive(message = "Quantity is required and must be positive")
     private Integer quantity;
 
     private Long supplierId;
