@@ -107,6 +107,94 @@ const AddEditProductPage = () => {
     }
   };
 
+  return (
+    <Layout>
+      {message && <div className="message">{message}</div>}
+
+      <div className="product-form-page">
+        <h1>{isEditing ? "Edit Product" : "Add Product"}</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Product Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Sku</label>
+            <input
+              type="text"
+              value={sku}
+              onChange={(e) => setSku(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Stock Quantity</label>
+            <input
+              type="number"
+              value={stockQuantity}
+              onChange={(e) => setStokeQuantity(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Price</label>
+            <input
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Description</label>
+
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Category</label>
+
+            <select
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+              required
+            >
+              <option value="">Select a category</option>
+
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>Product Image</label>
+            <input type="file" onChange={handleImageChange} />
+
+            {imageUrl && (
+              <img src={imageUrl} alt="preview" className="image-preview" />
+            )}
+          </div>
+          <button type="submit">{isEditing ? "Edit Product" : "Add Product"}</button>
+
+        </form>
+      </div>
+    </Layout>
+  );
 };
 
 export default AddEditProductPage;
