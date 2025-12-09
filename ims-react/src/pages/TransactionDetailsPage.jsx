@@ -92,7 +92,7 @@ const handleUpdateStatus = async()=>{
                 <p>Description: {transaction.product.description}</p>
 
                 {transaction.product.imageUrl && (
-                <img src={transaction.product.imageUrl} alt={transaction.product.name} />
+                <img src={ApiService.fileUrl(transaction.product.imageUrl)} alt={transaction.product.name} />
                 )}
                 
            </div>

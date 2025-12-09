@@ -49,6 +49,19 @@ export default class ApiService {
         localStorage.removeItem("role");
     }
 
+    // Build absolute file URL for static resources (e.g., images)
+    static apiOrigin() {
+        // Remove trailing /api from BASE_URL to get origin
+        return this.BASE_URL.replace(/\/api\/?$/, "");
+    }
+
+    static fileUrl(path) {
+        if (!path) return "";
+        if (/^https?:\/\//i.test(path)) return path;
+        const base = this.apiOrigin();
+        return `${base}/${path}`;
+    }
+
 
     static getHeader() {
         const token = this.getToken();

@@ -85,13 +85,13 @@ const ProductPage = () => {
               <div key={product.id} className="product-item">
                 <img
                   className="product-image"
-                  src={product.imageUrl}
+                  src={ApiService.fileUrl(product.imageUrl)}
                   alt={product.name}
                 />
 
                 <div className="product-info">
                     <h3 className="name">{product.name}</h3>
-                    <p className="sku">Sku: {product.su}</p>
+                    <p className="sku">Sku: {product.sku}</p>
                     <p className="price">Price: {product.price}</p>
                     <p className="quantity">Quantity: {product.stockQuantity}</p>
                 </div>

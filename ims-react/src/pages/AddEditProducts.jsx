@@ -44,7 +44,7 @@ const AddEditProductPage = () => {
             setStokeQuantity(productData.product.stockQuantity);
             setCategoryId(productData.product.categoryId);
             setDescription(productData.product.description);
-            setImageUrl(productData.product.imageUrl);
+            setImageUrl(ApiService.fileUrl(productData.product.imageUrl));
           } else {
             showMessage(productData.message);
           }
