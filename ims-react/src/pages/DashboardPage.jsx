@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../component/Layout";
+import Layout from "../components/Layout";
 import ApiService from "../service/ApiService";
 import {
   LineChart,
@@ -18,7 +18,7 @@ const DashboardPage = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedData, setSelectedData] = useState("amount");
   //veruble to store and set transaction data formated for chart display
-  const [transactionData, setTransactionData] = useState({});
+  const [transactionData, setTransactionData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
