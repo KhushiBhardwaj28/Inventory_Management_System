@@ -12,6 +12,8 @@ import SellPage from "./pages/SellPage";
 import PurchasePage from "./pages/PurchasePage";
 import TransactionsPage from "./pages/TransactionsPage";
 import TransactionDetailsPage from "./pages/TransactionDetailsPage";
+import ProfilePage from "./pages/ProfilePage";
+import DashboardPage from "./pages/DashboardPage";
 
 function App() {
   return (
@@ -32,6 +34,14 @@ function App() {
         <Route path="/sell" element={<ProtectedRoute element={<SellPage/>}/>}/>
         <Route path="/transaction" element={<ProtectedRoute element={<TransactionsPage/>}/>}/>
         <Route path="/transaction/:transactionId" element={<ProtectedRoute element={<TransactionDetailsPage/>}/>}/>
+        
+        <Route path="/profile" element={<ProtectedRoute element={<ProfilePage/>}/>}/>
+        <Route path="/dashboard" element={<ProtectedRoute element={<DashboardPage/>}/>}/>
+
+
+
+        <Route path="*" element={<LoginPage/>}/>
+
 
 
       </Routes>
