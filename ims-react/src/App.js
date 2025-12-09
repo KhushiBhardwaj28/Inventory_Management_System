@@ -11,6 +11,7 @@ import AddEditProductPage from "./pages/AddEditProducts";
 import SellPage from "./pages/SellPage";
 import PurchasePage from "./pages/PurchasePage";
 import TransactionsPage from "./pages/TransactionsPage";
+import TransactionDetailsPage from "./pages/TransactionDetailsPage";
 
 function App() {
   return (
@@ -24,14 +25,14 @@ function App() {
         <Route path="/edit-supplier/:supplierId" element={<AddEditSupplierPage />} />
         <Route path="/categories" element={<CategoryPage />} />
         <Route path="/product" element={<AdminRoute element={<ProductPage/>}/>}/>
+        <Route path="/add-product" element={<AdminRoute element={<AddEditProductPage/>}/>}/>
+        <Route path="/edit-product/:productId" element={<AdminRoute element={<AddEditProductPage/>}/>}/>
 
         <Route path="/purchase" element={<ProtectedRoute element={<PurchasePage/>}/>}/>
         <Route path="/sell" element={<ProtectedRoute element={<SellPage/>}/>}/>
         <Route path="/transaction" element={<ProtectedRoute element={<TransactionsPage/>}/>}/>
+        <Route path="/transaction/:transactionId" element={<ProtectedRoute element={<TransactionDetailsPage/>}/>}/>
 
-
-        <Route path="/add-product" element={<AdminRoute element={<AddEditProductPage/>}/>}/>
-        <Route path="/edit-product/:productId" element={<AdminRoute element={<AddEditProductPage/>}/>}/>
 
       </Routes>
     </Router>
