@@ -16,7 +16,7 @@ const Sidebar = () => {
       <ul className="nav-links">
         {isAuth && (
           <li>
-            <Link to="/dashboard">Dashboaard</Link>
+            <Link to="/dashboard">Dashboard</Link>
           </li>
         )}
 
@@ -28,7 +28,7 @@ const Sidebar = () => {
 
         {isAdmin && (
           <li>
-            <Link to="/category">Category</Link>
+            <Link to="/categories">Category</Link>
           </li>
         )}
 
@@ -40,7 +40,7 @@ const Sidebar = () => {
 
         {isAdmin && (
           <li>
-            <Link to="/supplier">Supplier</Link>
+            <Link to="/suppliers">Supplier</Link>
           </li>
         )}
 

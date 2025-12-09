@@ -3,6 +3,7 @@ package com.Inv.InventoryMgtSystem.models;
 import com.Inv.InventoryMgtSystem.enums.TransactionStatus;
 import com.Inv.InventoryMgtSystem.enums.TransactionType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -40,6 +41,7 @@ public class Transaction {
     private BigDecimal totalPrice; // ✅ FIX 1: Changed Double to BigDecimal
 
     @Enumerated(EnumType.STRING)
+    @Convert(converter = com.Inv.InventoryMgtSystem.config.TransactionTypeConverter.class)
     @Column(name = "transaction_type")
     private TransactionType transactionType;
 

@@ -45,11 +45,11 @@ const AddEditSupplierPage = () => {
       if (isEditing) {
         await ApiService.updateSupplier(supplierId, supplierData);
         showMessage("Supplier Edited succesfully");
-        navigate("/supplier")
+        navigate("/suppliers")
       } else {
         await ApiService.addSupplier(supplierData);
         showMessage("Supplier Added succesfully");
-        navigate("/supplier")
+        navigate("/suppliers")
       }
     } catch (error) {
       showMessage(
