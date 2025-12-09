@@ -8,6 +8,9 @@ import AddEditSupplierPage from "./pages/AddEditSupplierPage";
 import CategoryPage from "./pages/CategoryPage";
 import ProductPage from "./pages/ProductPage";
 import AddEditProductPage from "./pages/AddEditProducts";
+import SellPage from "./pages/SellPage";
+import PurchasePage from "./pages/PurchasePage";
+import TransactionsPage from "./pages/TransactionsPage";
 
 function App() {
   return (
@@ -21,6 +24,10 @@ function App() {
         <Route path="/edit-supplier/:supplierId" element={<AddEditSupplierPage />} />
         <Route path="/categories" element={<CategoryPage />} />
         <Route path="/product" element={<AdminRoute element={<ProductPage/>}/>}/>
+
+        <Route path="/purchase" element={<ProtectedRoute element={<PurchasePage/>}/>}/>
+        <Route path="/sell" element={<ProtectedRoute element={<SellPage/>}/>}/>
+        <Route path="/transaction" element={<ProtectedRoute element={<TransactionsPage/>}/>}/>
 
 
         <Route path="/add-product" element={<AdminRoute element={<AddEditProductPage/>}/>}/>
