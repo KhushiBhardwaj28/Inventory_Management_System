@@ -64,6 +64,65 @@ const SellPage = () => {
     }, 4000);
   };
 
- 
+  return (
+    <Layout>
+      {message && <div className="message">{message}</div>}
+      <div className="purchase-form-page">
+        <h1>Sell Product</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Select product</label>
+
+            <select
+              value={productId}
+              onChange={(e) => setProductId(e.target.value)}
+              required
+            >
+              <option value="">Select a product</option>
+              {products.map((product) => (
+                <option key={product.id} value={product.id}>
+                  {product.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+
+          <div className="form-group">
+            <label>Quantity</label>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Description</label>
+            <input
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Note</label>
+            <input
+              type="text"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              required
+            />
+          </div>
+
+
+          <button type="submit">Sell Product</button>
+        </form>
+      </div>
+    </Layout>
+  );
 };
 export default SellPage;
