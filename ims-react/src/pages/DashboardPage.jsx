@@ -92,29 +92,33 @@ const DashboardPage = () => {
 
   return (
     <Layout>
-      {message && <div className="glass-card fade-in">{message}</div>}
-      <div className="grid cols-2" style={{ alignItems: 'start' }}>
-        <div className="glass-card float-in">
-          <div className="heading-xl">Analytics</div>
-          <div className="muted" style={{ marginTop: 6 }}>Explore daily performance</div>
-          <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
-            <button className="btn-primary" onClick={() => setSelectedData('count')}>Transactions</button>
-            <button className="btn-ghost" onClick={() => setSelectedData('quantity')}>Quantity</button>
-            <button className="btn-ghost" onClick={() => setSelectedData('amount')}>Amount</button>
-          </div>
+      {message && <div className="message">{message}</div>}
+      <div className="dashboard-page">
+        <div className="button-group">
+          <button onClick={() => setSelectedData("count")}>
+            ToTal No Of Transactions
+          </button>
+          <button onClick={() => setSelectedData("quantity")}>
+            Product Quantity
+          </button>
+          <button onClick={() => setSelectedData("amount")}>Amount</button>
 
-          <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
-            <label htmlFor="month-select" className="muted">Month</label>
-            <select id="month-select" value={selectedMonth} onChange={handleMonthChange} className="btn-ghost">
+        </div>
+
+        
+        <div className="dashboard-content">
+          <div className="filter-section">
+            <label htmlFor="month-select">Select Month:</label>
+            <select id="month-select" value={selectedMonth} onChange={handleMonthChange}>
               {Array.from({ length: 12 }, (_, i) => (
                 <option key={i + 1} value={i + 1}>
-                  {new Date(0, i).toLocaleString('default', { month: 'long' })}
+                  {new Date(0, i).toLocaleString("default", { month: "long" })}
                 </option>
               ))}
             </select>
 
-            <label htmlFor="year-select" className="muted">Year</label>
-            <select id="year-select" value={selectedYear} onChange={handleYearChange} className="btn-ghost">
+            <label htmlFor="year-select">Select Year:</label>
+            <select id="year-select" value={selectedYear} onChange={handleYearChange}>
               {Array.from({ length: 5 }, (_, i) => {
                 const year = new Date().getFullYear() - i;
                 return (
@@ -126,35 +130,31 @@ const DashboardPage = () => {
             </select>
           </div>
 
-          <div style={{ marginTop: 16 }}>
-            <ResponsiveContainer width="100%" height={380}>
-              <LineChart data={transactionData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                <XAxis dataKey="day" tick={{ fill: '#a8b0c2' }} />
-                <YAxis tick={{ fill: '#a8b0c2' }} />
-                <Tooltip />
-                <Legend />
-                <Line type={'monotone'} dataKey={selectedData} stroke="#3b82f6" fillOpacity={0.3} fill="#0ea5b7" />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+          {/* Display the chart */}
+          <div className="chart-section">
+            <div className="chart-container">
+                <h3>Daily Transactions</h3>
+                <ResponsiveContainer width="100%" height={400}>
+                    <LineChart data={transactionData}>
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <XAxis dataKey="day" label={{value: "Day", position: "insideBottomRight", offset: -5}}/>
+                        <YAxis/>
+                        <Tooltip/>
+                        <Legend/>
+                        <Line type={"monotone"}
+                        dataKey={selectedData}
+                        stroke="#008080"
+                        fillOpacity={0.3}
+                        fill="#008080"
+                        />
+                    </LineChart>
+                </ResponsiveContainer>
 
-        <div className="grid cols-1" style={{ gap: 16 }}>
-          <div className="glass-card float-in metric">
-            <div>
-              <div className="heading-lg">Today</div>
-              <div className="muted">Quick snapshot</div>
             </div>
-            <button className="btn-ghost">Refresh</button>
+
           </div>
-          <div className="glass-card metric">
-            <div>
-              <div className="heading-lg">Inventory</div>
-              <div className="muted">Track stock changes</div>
-            </div>
-            <button className="btn-ghost">View</button>
-          </div>
+
+
         </div>
       </div>
     </Layout>
