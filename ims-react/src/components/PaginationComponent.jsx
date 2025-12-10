@@ -5,9 +5,9 @@ const PaginationComponent = ({currentPage, totalPages, onPageChange}) =>{
     const pageNumbers = Array.from({length: totalPages}, (_, i) => i+1);
 
     return(
-        <div className="pagination-container">
+        <div className="pagination-container" style={{ display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center', marginTop: 16 }}>
             <button 
-            className="pagination-button"
+            className="btn-ghost"
             disabled={currentPage === 1}
             onClick={()=> onPageChange(currentPage - 1)}
             >
@@ -16,13 +16,13 @@ const PaginationComponent = ({currentPage, totalPages, onPageChange}) =>{
 
             {pageNumbers.map((number) =>(
                 <button key={number}
-                className={`pagination-button ${currentPage === number ? "active": ""} ` }
+                className={`btn-ghost ${currentPage === number ? "active": ""} ` }
                 onClick={()=> onPageChange(number)}>
                 {number}
                 </button>
             ))}
 
-            <button className="pagination-button"
+            <button className="btn-ghost"
             disabled={currentPage === totalPages}
             onClick={()=> onPageChange(currentPage + 1)}>
                     Next &raquo;
