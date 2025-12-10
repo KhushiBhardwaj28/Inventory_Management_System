@@ -40,7 +40,6 @@ public class Transaction {
     @Column(name = "total_price")
     private BigDecimal totalPrice; // ✅ FIX 1: Changed Double to BigDecimal
 
-    @Enumerated(EnumType.STRING)
     @Convert(converter = com.Inv.InventoryMgtSystem.config.TransactionTypeConverter.class)
     @Column(name = "transaction_type")
     private TransactionType transactionType;

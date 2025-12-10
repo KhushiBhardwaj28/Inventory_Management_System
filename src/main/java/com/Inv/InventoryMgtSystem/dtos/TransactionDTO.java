@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -21,12 +22,12 @@ public class TransactionDTO {
 
     private Long id;
     private Integer totalProducts;
-    private Double totalPrice;
+    private BigDecimal totalPrice;
     private TransactionType transactionType;
-    private TransactionStatus transactionStatus;
+    private TransactionStatus status;
     private String description;
     private String note;
-    private LocalDateTime updatedAt;
+    private LocalDateTime updateAt;
     private LocalDateTime createdAt;
 
     private Long productId;

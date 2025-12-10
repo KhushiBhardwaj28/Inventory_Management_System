@@ -168,14 +168,16 @@ public class TransactionServiceImpl implements TransactionService {
         Specification<Transaction> spec = TransactionFilter.byFilter(filter);
         Page<Transaction> transactionPage = transactionRepository.findAll(spec, pageable);
 
-        List<TransactionDTO> transactionDTOS = modelMapper.map(transactionPage.getContent(), new TypeToken<List<TransactionDTO>>() {
-        }.getType());
-
-        transactionDTOS.forEach(transactionDTO -> {
-            transactionDTO.setUser(null);
-            transactionDTO.setProduct(null);
-            transactionDTO.setSupplier(null);
-        });
+                List<TransactionDTO> transactionDTOS = transactionPage.getContent().stream()
+                                .map(tx -> {
+                                        TransactionDTO dto = modelMapper.map(tx, TransactionDTO.class);
+                                        // Drop heavy nested relations to avoid immutable collection mapping
+                                        dto.setUser(null);
+                                        dto.setProduct(null);
+                                        dto.setSupplier(null);
+                                        return dto;
+                                })
+                                .toList();
 
         return Response.builder()
                 .status(200)
@@ -193,9 +195,11 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction transaction = transactionRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Transaction Not Found"));
 
+        // Map single transaction safely and drop nested relations
         TransactionDTO transactionDTO = modelMapper.map(transaction, TransactionDTO.class);
-
-        transactionDTO.getUser().setTransactions(null);
+        transactionDTO.setUser(null);
+        transactionDTO.setProduct(null);
+        transactionDTO.setSupplier(null);
 
         return Response.builder()
                 .status(200)
@@ -206,16 +210,17 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Response getAllTransactionByMonthAndYear(int month, int year) {
-        List<Transaction> transactions = transactionRepository.findAll(TransactionFilter.byMonthAndYear(month, year));
+                List<Transaction> transactions = transactionRepository.findAll(TransactionFilter.byMonthAndYear(month, year));
 
-        List<TransactionDTO> transactionDTOS = modelMapper.map(transactions, new TypeToken<List<TransactionDTO>>() {
-        }.getType());
-
-        transactionDTOS.forEach(transactionDTO -> {
-            transactionDTO.setUser(null);
-            transactionDTO.setProduct(null);
-            transactionDTO.setSupplier(null);
-        });
+                List<TransactionDTO> transactionDTOS = transactions.stream()
+                                .map(tx -> {
+                                        TransactionDTO dto = modelMapper.map(tx, TransactionDTO.class);
+                                        dto.setUser(null);
+                                        dto.setProduct(null);
+                                        dto.setSupplier(null);
+                                        return dto;
+                                })
+                                .toList();
 
         return Response.builder()
                 .status(200)

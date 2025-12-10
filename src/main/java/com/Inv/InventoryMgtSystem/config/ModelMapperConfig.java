@@ -11,10 +11,15 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
-        // Use a minimal configuration to avoid TypeResolver recursion issues
+        // Base configuration
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT)
-                .setSkipNullEnabled(true);
+                .setSkipNullEnabled(true)
+                .setCollectionsMergeEnabled(false);
+
+        // Remove custom type map skips to avoid configuration conflicts.
+        // If needed, handle nested associations at service/DTO level explicitly.
+
         return modelMapper;
     }
 
