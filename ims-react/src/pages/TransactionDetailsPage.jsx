@@ -74,49 +74,53 @@ const handleUpdateStatus = async()=>{
                 <p>Description: {transaction.description}</p>
                 <p>Note: {transaction.note}</p>
                 <p>Total Products: {transaction.totalProducts}</p>
-                <p>Total Price: {transaction.totalPrice.toFixed(2)}</p>
-                <p>Create AT: {new Date(transaction.createdAt).toLocaleString()}</p>
+                 <p>Total Price: {Number(transaction.totalPrice ?? 0).toFixed(2)}</p>
+                 <p>Create AT: {transaction.createdAt ? new Date(transaction.createdAt).toLocaleString() : '-'}</p>
 
-                {transaction.updatedAt && (
-                <p>Updated At: {new Date(transaction.updatedAt).toLocaleString()}</p>
-                )}
+                 {transaction.updateAt && (
+                 <p>Updated At: {new Date(transaction.updateAt).toLocaleString()}</p>
+                 )}
            </div>
 
            {/* Product information of the transaction */}
-           <div className="section-card">
+               {transaction.product && (
+               <div className="section-card">
                 <h2>Product Information</h2>
-                <p>Name: {transaction.product.name}</p>
-                <p>SKU: {transaction.product.sku}</p>
-                <p>Price: {transaction.product.price.toFixed(2)}</p>
-                <p>Stock Quantity: {transaction.product.stockQuantity}</p>
-                <p>Description: {transaction.product.description}</p>
+                 <p>Name: {transaction.product?.name}</p>
+                 <p>SKU: {transaction.product?.sku}</p>
+                 <p>Price: {transaction.product?.price != null ? Number(transaction.product.price).toFixed(2) : '-'}</p>
+                 <p>Stock Quantity: {transaction.product?.stockQuantity}</p>
+                 <p>Description: {transaction.product?.description}</p>
 
-                {transaction.product.imageUrl && (
-                <img src={ApiService.fileUrl(transaction.product.imageUrl)} alt={transaction.product.name} />
-                )}
+                 {transaction.product?.imageUrl && (
+                 <img src={ApiService.fileUrl(transaction.product.imageUrl)} alt={transaction.product?.name ?? 'product'} />
+                 )}
                 
            </div>
+               )}
 
            {/* User information who made the transaction */}
-           <div className="section-card">
+               {transaction.user && (
+               <div className="section-card">
                 <h2>User Information</h2>
-                <p>Name: {transaction.user.name}</p>
-                <p>Email: {transaction.user.email}</p>
-                <p>Phone Number: {transaction.user.phoneNumber}</p>
-                <p>Role: {transaction.user.role}</p>
-                <p>Create AT: {new Date(transaction.createdAt).toLocaleString()}</p>
+                 <p>Name: {transaction.user?.name}</p>
+                 <p>Email: {transaction.user?.email}</p>
+                 <p>Phone Number: {transaction.user?.phoneNumber}</p>
+                 <p>Role: {transaction.user?.role}</p>
+                 <p>Create AT: {transaction.createdAt ? new Date(transaction.createdAt).toLocaleString() : '-'}</p>
                 
            </div>
+               )}
 
 
 
            {/* Supplier information who made the transaction */}
-           {transaction.suppliers && (
+               {transaction.supplier && (
            <div className="section-card">
                 <h2>Supplier Information</h2>
-                <p>Name: {transaction.supplier.name}</p>
-                <p>Contact Address: {transaction.supplier.contactInfo}</p>
-                <p>Address: {transaction.supplier.address}</p> 
+                 <p>Name: {transaction.supplier?.name}</p>
+                 <p>Contact Address: {transaction.supplier?.contactInfo}</p>
+                 <p>Address: {transaction.supplier?.address}</p> 
            </div>
            )}
 

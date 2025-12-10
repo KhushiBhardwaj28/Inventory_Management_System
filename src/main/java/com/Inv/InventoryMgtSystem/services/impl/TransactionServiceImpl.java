@@ -169,15 +169,8 @@ public class TransactionServiceImpl implements TransactionService {
         Page<Transaction> transactionPage = transactionRepository.findAll(spec, pageable);
 
                 List<TransactionDTO> transactionDTOS = transactionPage.getContent().stream()
-                                .map(tx -> {
-                                        TransactionDTO dto = modelMapper.map(tx, TransactionDTO.class);
-                                        // Drop heavy nested relations to avoid immutable collection mapping
-                                        dto.setUser(null);
-                                        dto.setProduct(null);
-                                        dto.setSupplier(null);
-                                        return dto;
-                                })
-                                .toList();
+                        .map(this::toDto)
+                        .toList();
 
         return Response.builder()
                 .status(200)
@@ -196,10 +189,7 @@ public class TransactionServiceImpl implements TransactionService {
                 .orElseThrow(() -> new NotFoundException("Transaction Not Found"));
 
         // Map single transaction safely and drop nested relations
-        TransactionDTO transactionDTO = modelMapper.map(transaction, TransactionDTO.class);
-        transactionDTO.setUser(null);
-        transactionDTO.setProduct(null);
-        transactionDTO.setSupplier(null);
+        TransactionDTO transactionDTO = toDto(transaction);
 
         return Response.builder()
                 .status(200)
@@ -213,14 +203,8 @@ public class TransactionServiceImpl implements TransactionService {
                 List<Transaction> transactions = transactionRepository.findAll(TransactionFilter.byMonthAndYear(month, year));
 
                 List<TransactionDTO> transactionDTOS = transactions.stream()
-                                .map(tx -> {
-                                        TransactionDTO dto = modelMapper.map(tx, TransactionDTO.class);
-                                        dto.setUser(null);
-                                        dto.setProduct(null);
-                                        dto.setSupplier(null);
-                                        return dto;
-                                })
-                                .toList();
+                        .map(this::toDto)
+                        .toList();
 
         return Response.builder()
                 .status(200)
@@ -246,5 +230,23 @@ public class TransactionServiceImpl implements TransactionService {
                 .build();
 
 
+        }
+
+        private TransactionDTO toDto(Transaction tx) {
+        if (tx == null) return null;
+        return TransactionDTO.builder()
+                .id(tx.getId())
+                .totalProducts(tx.getTotalProducts())
+                .totalPrice(tx.getTotalPrice())
+                .transactionType(tx.getTransactionType())
+                .status(tx.getStatus())
+                .description(tx.getDescription())
+                .note(tx.getNote())
+                .updateAt(tx.getUpdateAt())
+                .createdAt(tx.getCreatedAt())
+                .productId(tx.getProduct() != null ? tx.getProduct().getId() : null)
+                .userId(tx.getUser() != null ? tx.getUser().getId() : null)
+                .supplierId(tx.getSupplier() != null ? tx.getSupplier().getId() : null)
+                .build();
     }
 }
