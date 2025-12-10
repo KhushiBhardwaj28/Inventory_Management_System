@@ -3,6 +3,7 @@ package com.Inv.InventoryMgtSystem.services.impl;
 import com.Inv.InventoryMgtSystem.dtos.ProductDTO;
 import com.Inv.InventoryMgtSystem.dtos.Response;
 import com.Inv.InventoryMgtSystem.exceptions.NotFoundException;
+import com.Inv.InventoryMgtSystem.exceptions.NameValueRequiredException;
 import com.Inv.InventoryMgtSystem.models.Category;
 import com.Inv.InventoryMgtSystem.models.Product;
 import com.Inv.InventoryMgtSystem.repositories.CategoryRepository;
@@ -14,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +33,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
     private final CategoryRepository categoryRepository;
+    private final com.Inv.InventoryMgtSystem.repositories.TransactionRepository transactionRepository;
 
     private static final String IMAGE_DIRECTORY = System.getProperty("user.dir") + "/product-images/";
 
@@ -143,16 +146,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Response deleteProduct(Long id) {
 
         productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product Not Found"));
 
+        // Prevent deletion if transactions reference this product
+        long txCount = transactionRepository.countByProduct_Id(id);
+        if (txCount > 0) {
+            // Detach product from related transactions, then delete
+            int cleared = transactionRepository.clearProductReferences(id);
+            log.info("Cleared product references from {} transaction(s) for product {}", cleared, id);
+        }
+
         productRepository.deleteById(id);
 
         return Response.builder()
                 .status(200)
-                .message("Product Deleted successfully")
+                .message("Product deleted successfully")
                 .build();
     }
 
