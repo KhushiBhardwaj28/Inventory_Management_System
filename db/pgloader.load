@@ -2,8 +2,8 @@
 -- Edit MySQL credentials if different
 
 LOAD DATABASE
-  FROM mysql://<MYSQL_USER>:<MYSQL_PASSWORD>@<MYSQL_HOST>/<MYSQL_DB>
-  INTO postgresql://<PG_USER>:<PG_PASSWORD>@aws-1-ap-south-1.pooler.supabase.com:5432/postgres
+     FROM mysql://root:1234@localhost/Inventory
+     INTO postgresql://postgres.ynthxmwuumqwukothfei:-hK#K!zdP76V#&_@aws-1-ap-south-1.pooler.supabase.com:5432/postgres
 
  WITH
      workers = 4,

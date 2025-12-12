@@ -33,23 +33,12 @@ After successful migration:
 - Start Spring Boot and confirm logs show Postgres connection
 - Validate counts, e.g.
 ```powershell
-# Example checks using psql via WSL (replace placeholders)
-wsl psql "postgresql://<PG_USER>:<PG_PASSWORD>@aws-1-ap-south-1.pooler.supabase.com:5432/postgres?sslmode=require" -c "SELECT COUNT(*) FROM products;"
-wsl psql "postgresql://<PG_USER>:<PG_PASSWORD>@aws-1-ap-south-1.pooler.supabase.com:5432/postgres?sslmode=require" -c "SELECT COUNT(*) FROM categories;"
+# Example checks using psql via WSL
+wsl psql "postgresql://postgres.ynthxmwuumqwukothfei:-hK#K!zdP76V#&_@aws-1-ap-south-1.pooler.supabase.com:5432/postgres?sslmode=require" -c "SELECT COUNT(*) FROM products;"
+wsl psql "postgresql://postgres.ynthxmwuumqwukothfei:-hK#K!zdP76V#&_@aws-1-ap-south-1.pooler.supabase.com:5432/postgres?sslmode=require" -c "SELECT COUNT(*) FROM categories;"
 ```
 
 ## Notes
 - If you have additional tables, add them to the `INCLUDING ONLY` section.
 - If your schema names differ (e.g., not `public`), adjust the script accordingly.
 - For very large datasets, consider running during off-hours and increasing `workers`/`concurrency`.
-
-## Security Notes
-- Do NOT commit real credentials to version control. The file `db/pgloader.load` uses placeholders; create a local copy with real values (e.g., `pgloader.load.local`) and keep it ignored.
-- Rotate any leaked database passwords in Supabase immediately (Database settings → Reset/Rotate credentials).
-- Use environment variables for Spring:
-```powershell
-$env:SPRING_DATASOURCE_URL = "jdbc:postgresql://aws-1-ap-south-1.pooler.supabase.com:5432/postgres?sslmode=require"
-$env:SPRING_DATASOURCE_USERNAME = "<PG_USER>"
-$env:SPRING_DATASOURCE_PASSWORD = "<PG_PASSWORD>"
-$env:JWT_SECRET = "<A-STRONG-RANDOM-SECRET>"
-```
